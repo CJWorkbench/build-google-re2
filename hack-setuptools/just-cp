@@ -1,0 +1,21 @@
+#!/bin/bash
+
+# We won't let setup.py run gcc.
+#
+# Instead, we build with bazel and let setup.py _think_ it's calling gcc.
+# Really, it's calling this script -- that copies the file we assume exists
+# at /src/re2/bazel-bin/python/_re2.so over to the output file.
+
+while test $# -gt 0; do
+  case "$1" in
+    -o)
+      output_filename="$2"
+      shift
+      ;;
+    *)
+      shift
+      ;;
+  esac
+done
+
+cp -v /src/re2/bazel-bin/python/_re2.so "$output_filename"

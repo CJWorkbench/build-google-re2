@@ -1,0 +1,20 @@
+# https://github.com/bazelbuild/rules_python/issues/410#issuecomment-770269309
+load("@rules_python//python:defs.bzl", "py_runtime_pair")
+
+py_runtime(
+    name = "python-3.6",
+    interpreter_path = "/opt/python/cp36-cp36m/bin/python",
+    python_version = "PY3",
+)
+
+py_runtime_pair(
+    name = "my_py_runtime_pair",
+    py2_runtime = None,
+    py3_runtime = ":python-3.6",
+)
+
+toolchain(
+    name = "my_py_toolchain",
+    toolchain = ":my_py_runtime_pair",
+    toolchain_type = "@rules_python//python:toolchain_type",
+)
